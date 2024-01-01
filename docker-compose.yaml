@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  fastapi_app:
+    image: parser
+    build: .
+    ports:
+      - "${WEB_PORT}: ${WEB_PORT}"
+    env_file:
+      - .env
+    entrypoint:
+      - ./fastapi-entrypoint.sh
+    depends_on:
+      - mongodb_app
