@@ -11,14 +11,3 @@ services:
       - ./fastapi-entrypoint.sh
     depends_on:
       - mongodb_app
-
-  mongodb_app:
-    container_name: ${MONGODB_HOST}
-    image: mongo:latest
-    ports:
-      - ${MONGODB_PORT}:${MONGODB_PORT}
-    environment:
-      - MONGODB_INITDB_ROOT_USERNAME=${MONGODB_USER}
-      - MONGODB_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
-    volumes:
-      - ./data:/data/db
