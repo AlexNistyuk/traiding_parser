@@ -9,5 +9,3 @@ services:
       - .env
     entrypoint:
       - ./fastapi-entrypoint.sh
-    depends_on:
-      - mongodb_app
