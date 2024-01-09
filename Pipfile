@@ -9,6 +9,7 @@ uvicorn = "*"
 python-binance = "*"
 motor = "*"
 aiokafka = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
