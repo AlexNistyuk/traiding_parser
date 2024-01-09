@@ -9,6 +9,7 @@ python-binance = "*"
 motor = "*"
 aiokafka = "*"
 fastapi = {extras = ["all"], version = "*"}
+python-dotenv = "*"
 
 [dev-packages]
 
