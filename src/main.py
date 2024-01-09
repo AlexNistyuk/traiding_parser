@@ -7,7 +7,7 @@ from db.mongo_manager import Manager as DatabaseManager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    db_manager = await DatabaseManager().connect()
+    db_manager = await DatabaseManager.connect()
 
     yield
 
