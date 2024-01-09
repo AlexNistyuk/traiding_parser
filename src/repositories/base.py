@@ -3,9 +3,10 @@ from typing import Iterable
 from bson import ObjectId
 
 from db.mongo_manager import Manager
+from interfaces.database import IRepository
 
 
-class BaseRepository(Manager):
+class BaseRepository(Manager, IRepository):
     """Mongodb base repository with database operations"""
 
     collection: str
