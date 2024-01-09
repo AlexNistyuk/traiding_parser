@@ -1,15 +1,23 @@
 import os
+from functools import lru_cache
 from pathlib import Path
 
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(dotenv_path=os.path.join(BASE_DIR.parent, ".env"))
+ENV_FILE_PATH = os.path.join(BASE_DIR.parent, ".env")
 
 
-WEB_PORT = int(os.getenv("WEB_PORT"))
-WEB_HOST = str(os.getenv("WEB_HOST"))
+class Settings(BaseSettings):
+    web_port: int
+    web_host: str
+    mongodb_url: str
+    mongodb_database: str
+    mongodb_collection: str
 
-MONGODB_URL = str(os.getenv("MONGODB_URL"))
-MONGODB_DATABASE = str(os.getenv("MONGODB_DATABASE"))
-MONGODB_COLLECTION = str(os.getenv("MONGODB_COLLECTION"))
+    model_config = SettingsConfigDict(env_file=ENV_FILE_PATH)
+
+
+@lru_cache
+def get_settings():
+    return Settings()

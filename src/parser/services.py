@@ -1,9 +1,7 @@
 from binance import AsyncClient
 
-from src.interfaces import IService
 
-
-class BinanceAPIService(IService):
+class BinanceAPIService:
     async def __aenter__(self):
         self.client = await AsyncClient.create()
 
