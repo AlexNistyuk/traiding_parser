@@ -8,7 +8,6 @@ uvicorn = "*"
 python-binance = "*"
 motor = "*"
 aiokafka = "*"
-python-dotenv = "*"
 fastapi = {extras = ["all"], version = "*"}
 
 [dev-packages]
