@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     web_host: str
     mongodb_url: str
     mongodb_database: str
-    mongodb_collection: str
+    assets_collection: str
 
     model_config = SettingsConfigDict(env_file=ENV_FILE_PATH)
 
