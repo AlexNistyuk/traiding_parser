@@ -4,11 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
 uvicorn = "*"
 python-binance = "*"
 motor = "*"
 aiokafka = "*"
+fastapi = {extras = ["all"], version = "*"}
+python-dotenv = "*"
 
 [dev-packages]
 
