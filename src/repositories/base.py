@@ -24,10 +24,10 @@ class BaseRepository(Manager, IRepository):
         return await self.db[self.collection].find_one(filters)
 
     async def filter(self, filters: dict):
-        return self.db[self.collection].find(filters).to_list(length=None)
+        return await self.db[self.collection].find(filters).to_list(length=None)
 
     async def get_all(self):
-        return self.db[self.collection].find({}).to_list(length=None)
+        return await self.db[self.collection].find({}).to_list(length=None)
 
     async def delete_by_id(self, document_id: str):
         return await self.db[self.collection].delete_one({"_id": ObjectId(document_id)})
