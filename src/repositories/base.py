@@ -17,8 +17,8 @@ class BaseRepository(Manager, IRepository):
     async def insert_many(self, documents: Iterable[dict]):
         return await self.db[self.collection].insert_many(documents)
 
-    async def get_by_id(self, document_id: ObjectId):
-        return await self.db[self.collection].find_one({"_id": document_id})
+    async def get_by_id(self, document_id: str):
+        return await self.db[self.collection].find_one({"_id": ObjectId(document_id)})
 
     async def get_one(self, filters: dict):
         return await self.db[self.collection].find_one(filters)
@@ -29,8 +29,8 @@ class BaseRepository(Manager, IRepository):
     async def get_all(self):
         return self.db[self.collection].find({}).to_list(length=None)
 
-    async def delete_by_id(self, document_id: ObjectId):
-        return await self.db[self.collection].delete_one({"_id": document_id})
+    async def delete_by_id(self, document_id: str):
+        return await self.db[self.collection].delete_one({"_id": ObjectId(document_id)})
 
     async def delete_one(self, filters: dict):
         return await self.db[self.collection].delete_one(filters)
@@ -38,8 +38,10 @@ class BaseRepository(Manager, IRepository):
     async def delete_many(self, filters: dict):
         return await self.db[self.collection].delete_many(filters)
 
-    async def update_by_id(self, document_id: ObjectId, updates: dict):
-        return await self.db[self.collection].update_one({"_id": document_id}, updates)
+    async def update_by_id(self, document_id: str, updates: dict):
+        return await self.db[self.collection].update_one(
+            {"_id": ObjectId(document_id)}, updates
+        )
 
     async def update_one(self, filters: dict, updates: dict):
         return await self.db[self.collection].update_one(filters, updates)
