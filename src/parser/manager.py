@@ -19,8 +19,7 @@ class BinanceManager:
 
             cls.client = await AsyncClient.create()
             cls.web_socket = BinanceSocketManager(cls.client).ticker_socket()
-
-            await cls.web_socket.connect()
+            await cls.web_socket.__aenter__()
 
             return cls
         except BinanceWebsocketUnableToConnect as exc:
@@ -28,6 +27,7 @@ class BinanceManager:
 
     @classmethod
     async def close(cls):
+        await cls.web_socket.__aexit__(None, None, None)
         await cls.client.close_connection()
 
         logger.info("Close Binance API web socker connection")
