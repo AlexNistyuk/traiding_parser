@@ -4,7 +4,7 @@ from parser.manager import BinanceManager
 import uvicorn
 from fastapi import FastAPI
 
-from assets.router import router as assets_router
+from api.v1.routers import router as v1_router
 from db.mongo_manager import Manager as DatabaseManager
 
 
@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(assets_router)
+app.include_router(v1_router)
 
 
 if __name__ == "__main__":

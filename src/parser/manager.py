@@ -1,9 +1,8 @@
 import logging
 
+from binance import AsyncClient
 from binance.exceptions import BinanceWebsocketUnableToConnect
 from binance.streams import BinanceSocketManager, ReconnectingWebsocket
-
-from binance import AsyncClient
 
 logger = logging.Logger(__name__)
 
@@ -19,6 +18,7 @@ class BinanceManager:
 
             cls.client = await AsyncClient.create()
             cls.web_socket = BinanceSocketManager(cls.client).ticker_socket()
+
             await cls.web_socket.__aenter__()
 
             return cls
