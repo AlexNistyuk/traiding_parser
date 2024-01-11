@@ -1,10 +1,20 @@
+import datetime
+
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
 
 class AssetCreate(BaseModel):
     symbol: str
-    price: float
+    price_change: float
+    price_change_percent: float
+    current_close_price: float
+    previous_close_price: float
+    open_price: float
+    best_bid_price: float
+    high_price: float
+    low_price: float
+    time: int = int(datetime.datetime.now(tz=datetime.timezone.utc).timestamp())
 
 
 class PyObjectId(ObjectId):
@@ -32,4 +42,12 @@ class AssetGet(AssetCreate):
 
 class AssetHistory(BaseModel):
     symbol: str = Field(validation_alias="_id")
-    values: list
+    price_change: list
+    price_change_percent: list
+    current_close_price: list
+    previous_close_price: list
+    open_price: list
+    best_bid_price: list
+    high_price: list
+    low_price: list
+    time: list
