@@ -1,13 +1,13 @@
 from typing import Iterable
 
+from interfaces.database import IRepository
 from interfaces.service import IService
-from repositories.base import BaseRepository
 
 
 class BaseService(IService):
     """Mongodb base service"""
 
-    repository: BaseRepository
+    repository: IRepository
 
     async def insert_one(self, document: dict):
         return await self.repository.insert_one(document)
