@@ -11,6 +11,8 @@ aiokafka = "*"
 fastapi = {extras = ["all"], version = "*"}
 python-dotenv = "*"
 websockets = "*"
+celery = "*"
+redis = "*"
 
 [dev-packages]
 

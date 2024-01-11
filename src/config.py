@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     mongodb_url: str
     mongodb_database: str
     assets_collection: str
+    redis_host: str
+    redis_port: int
+    celery_beat_time: int
 
     model_config = SettingsConfigDict(env_file=ENV_FILE_PATH)
 
