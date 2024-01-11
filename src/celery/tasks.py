@@ -13,7 +13,7 @@ celery_app.autodiscover_tasks()
 
 celery_app.conf.beat_schedule = {
     "get_tickers_info": {
-        "task": "celery.tasks.send_tickers_info",
+        "task": "celery.tasks.CeleryTask.send_tickers_info",
         "schedule": settings.celery_beat_time,
     }
 }
@@ -27,12 +27,4 @@ class CeleryTask:
         tickers_info = await BinanceAPIService().get_tickers_info()
         await BinanceAPIService().close()
 
-        print(len(tickers_info))
-        # database_task = asyncio.create_task(AssetRepository().insert_many(tickers_info))
-        #
-        # await database_task
-
-        return 200
-
-
-CeleryTask.send_tickers_info.delay()
+        print(len(tickers_info[0]))
