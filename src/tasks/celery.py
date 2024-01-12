@@ -1,6 +1,8 @@
+import asyncio
 from parser.services import BinanceAPIService
 
 from celery.app import Celery
+
 from config import get_settings
 
 settings = get_settings()
@@ -13,18 +15,20 @@ celery_app.autodiscover_tasks()
 
 celery_app.conf.beat_schedule = {
     "get_tickers_info": {
-        "task": "celery.tasks.CeleryTask.send_tickers_info",
+        "task": "tasks.celery.send_tickers_info",
         "schedule": settings.celery_beat_time,
     }
 }
 
 
-class CeleryTask:
-    @staticmethod
-    @celery_app.task
-    async def send_tickers_info():
-        await BinanceAPIService().connect()
-        tickers_info = await BinanceAPIService().get_tickers_info()
-        await BinanceAPIService().close()
+@celery_app.task
+def send_tickers_info():
+    asyncio.run(get_ticker_info_and_send())
 
-        print(len(tickers_info[0]))
+
+async def get_ticker_info_and_send():
+    await BinanceAPIService().connect()
+    tickers_info = await BinanceAPIService().get_tickers_info()
+    await BinanceAPIService().close()
+
+    print(len(tickers_info[0]))
