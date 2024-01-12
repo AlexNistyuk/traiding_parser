@@ -10,6 +10,7 @@ motor = "*"
 aiokafka = "*"
 fastapi = {extras = ["all"], version = "*"}
 python-dotenv = "*"
+websockets = "*"
 
 [dev-packages]
 

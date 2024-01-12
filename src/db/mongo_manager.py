@@ -1,8 +1,12 @@
+import logging
+
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 from config import get_settings
 
 settings = get_settings()
+
+logger = logging.Logger(__name__)
 
 
 class Manager:
@@ -16,5 +20,7 @@ class Manager:
         return cls
 
     @classmethod
-    async def close(cls):
+    async def close(cls) -> None:
         cls.client.close()
+
+        logger.info("Close database connection")
