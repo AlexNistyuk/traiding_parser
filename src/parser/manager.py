@@ -26,7 +26,7 @@ class BinanceManager:
             logger.error(f"Error while connecting to binance api: {exc}")
 
     @classmethod
-    async def close(cls):
+    async def close(cls) -> None:
         await cls.web_socket.__aexit__(None, None, None)
         await cls.client.close_connection()
 

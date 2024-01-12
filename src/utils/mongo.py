@@ -4,7 +4,7 @@ from bson import ObjectId
 from pydantic_core import core_schema
 
 
-class PyObjectId(ObjectId):
+class MongoObjectId(ObjectId):
     """Custom type for reading MongoDB ids"""
 
     @classmethod

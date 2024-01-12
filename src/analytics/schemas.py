@@ -1,17 +1,29 @@
 import datetime
 from decimal import Decimal
 
-from pydantic import BaseModel, Field
+from bson import Decimal128
+from pydantic import BaseModel, Field, field_validator
 
 from config import get_settings
-from utils.mongo import PyObjectId
+from utils.mongo import MongoObjectId
 
 settings = get_settings()
 
+DECIMAL_FIELDS = (
+    "price_change",
+    "price_change_percent",
+    "current_close_price",
+    "previous_close_price",
+    "open_price",
+    "best_bid_price",
+    "high_price",
+    "low_price",
+)
+
 
 class AnalyticsGet(BaseModel):
-    id: PyObjectId = Field(
-        default_factory=PyObjectId,
+    id: MongoObjectId = Field(
+        default_factory=MongoObjectId,
         alias="_id",
         validation_alias="_id",
         serialization_alias="_id",
@@ -153,10 +165,15 @@ class AnalyticsGet(BaseModel):
         examples=[1789213123123123, 92838287172381273],
     )
 
+    @field_validator(*DECIMAL_FIELDS, mode="before")
+    @staticmethod
+    def convert_to_decimal(field_value: Decimal128) -> Decimal:
+        return field_value.to_decimal()
+
     class Config:
         populate_by_name = True
         arbitrary_types_allowed = True
-        json_encoders = {PyObjectId: str}
+        json_encoders = {MongoObjectId: str}
 
 
 class AnalyticsHistory(BaseModel):
@@ -166,12 +183,12 @@ class AnalyticsHistory(BaseModel):
         description="Asset name",
         examples=["ETHBTC", "BNBBTC"],
         min_length=2,
-        max_length=10,
+        max_length=30,
         repr=True,
         validation_alias="_id",
         serialization_alias="_id",
     )
-    price_change: list = Field(
+    price_change: list[Decimal] = Field(
         default=[0],
         alias="price_change",
         serialization_alias="price_change",
@@ -182,7 +199,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    price_change_percent: list = Field(
+    price_change_percent: list[Decimal] = Field(
         default=[0],
         alias="price_change_percent",
         serialization_alias="price_change_percent",
@@ -193,7 +210,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    current_close_price: list = Field(
+    current_close_price: list[Decimal] = Field(
         default=[0],
         alias="current_close_price",
         serialization_alias="current_close_price",
@@ -204,7 +221,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    previous_close_price: list = Field(
+    previous_close_price: list[Decimal] = Field(
         default=[0],
         alias="previous_close_price",
         serialization_alias="previous_close_price",
@@ -215,7 +232,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    open_price: list = Field(
+    open_price: list[Decimal] = Field(
         default=[0],
         alias="open_price",
         serialization_alias="open_price",
@@ -226,7 +243,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    best_bid_price: list = Field(
+    best_bid_price: list[Decimal] = Field(
         default=[0],
         alias="best_bid_price",
         serialization_alias="best_bid_price",
@@ -237,7 +254,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    high_price: list = Field(
+    high_price: list[Decimal] = Field(
         default=[0],
         alias="high_price",
         serialization_alias="high_price",
@@ -248,7 +265,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    low_price: list = Field(
+    low_price: list[Decimal] = Field(
         default=[0],
         alias="low_price",
         serialization_alias="low_price",
@@ -259,7 +276,7 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[12.0, 54.341]],
     )
-    time: int = Field(
+    time: list[int] = Field(
         default=int(datetime.datetime.now(tz=datetime.timezone.utc).timestamp()),
         alias="time",
         serialization_alias="time",
@@ -270,3 +287,8 @@ class AnalyticsHistory(BaseModel):
         validate_default=True,
         examples=[[1789213123123123, 92838287172381273]],
     )
+
+    @field_validator(*DECIMAL_FIELDS, mode="plain")
+    @staticmethod
+    def convert_to_decimal(field_values: list[Decimal128]) -> list[Decimal]:
+        return [value.to_decimal() for value in field_values]

@@ -1,12 +1,25 @@
 import datetime
 from decimal import Decimal
 
-from pydantic import BaseModel, Field
+from bson import Decimal128
+from pydantic import BaseModel, Field, field_validator
 
 from config import get_settings
-from utils.mongo import PyObjectId
+from utils.mongo import MongoObjectId
 
 settings = get_settings()
+
+
+DECIMAL_FIELDS = (
+    "price_change",
+    "price_change_percent",
+    "current_close_price",
+    "previous_close_price",
+    "open_price",
+    "best_bid_price",
+    "high_price",
+    "low_price",
+)
 
 
 class AssetCreate(BaseModel):
@@ -144,10 +157,15 @@ class AssetCreate(BaseModel):
         examples=[1789213123123123, 92838287172381273],
     )
 
+    @field_validator(*DECIMAL_FIELDS, mode="after")
+    @staticmethod
+    def convert_to_decimal128(field_value: float) -> Decimal128:
+        return Decimal128(str(field_value))
+
 
 class AssetGet(BaseModel):
-    id: PyObjectId = Field(
-        default_factory=PyObjectId,
+    id: MongoObjectId = Field(
+        default_factory=MongoObjectId,
         alias="_id",
         validation_alias="_id",
         serialization_alias="_id",
@@ -193,7 +211,12 @@ class AssetGet(BaseModel):
         examples=[1789213123123123, 92838287172381273],
     )
 
+    @field_validator("best_bid_price", mode="before")
+    @staticmethod
+    def convert_to_decimal(field_value: Decimal128) -> Decimal:
+        return field_value.to_decimal()
+
     class Config:
         populate_by_name = True
         arbitrary_types_allowed = True
-        json_encoders = {PyObjectId: str}
+        json_encoders = {MongoObjectId: str}

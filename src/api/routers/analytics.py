@@ -9,15 +9,15 @@ router = APIRouter(prefix="/analytics", tags=["analytics"])
 
 
 @router.get("/", response_model=List[AnalyticsGet])
-async def get_assets():
+async def get_assets() -> list[dict]:
     return await AnalyticsService().get_all()
 
 
 @router.get("/history", response_model=AnalyticsHistory)
-async def get_assets_history():
+async def get_assets_history() -> dict:
     return await AnalyticsService().get_group_by_assets()
 
 
 @router.get("/{asset_id}", response_model=AnalyticsGet)
-async def get_asset(asset_id: str):
+async def get_asset(asset_id: str) -> dict:
     return await AnalyticsService().get_by_id(asset_id)

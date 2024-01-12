@@ -5,7 +5,7 @@ from repositories.base import BaseRepository
 class AssetRepository(BaseRepository):
     collection = get_settings().assets_collection
 
-    async def get_group_by_assets(self):
+    async def get_group_by_assets(self) -> dict:
         return (
             await self.db[self.collection]
             .aggregate(
@@ -27,4 +27,4 @@ class AssetRepository(BaseRepository):
                 ]
             )
             .to_list(length=None)
-        )
+        )[0]

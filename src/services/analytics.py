@@ -6,5 +6,5 @@ class AnalyticsService(BaseService):
     repository = AssetRepository()
     fields = {}
 
-    async def get_group_by_assets(self):
+    async def get_group_by_assets(self) -> dict:
         return await self.repository.get_group_by_assets()
