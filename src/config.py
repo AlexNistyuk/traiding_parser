@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     celery_beat_time: int
     decimal_places: int
     decimal_max_digits: int
+    binance_api_request_timeout: int
 
     model_config = SettingsConfigDict(env_file=ENV_FILE_PATH)
 
