@@ -8,6 +8,7 @@ class BaseService(IService):
     """Mongodb base service"""
 
     repository: IRepository
+    fields: dict
 
     async def insert_one(self, document: dict):
         return await self.repository.insert_one(document)
@@ -16,16 +17,16 @@ class BaseService(IService):
         return await self.repository.insert_many(documents)
 
     async def get_by_id(self, document_id: str):
-        return await self.repository.get_by_id(document_id)
+        return await self.repository.get_by_id(document_id, self.fields)
 
     async def get_one(self, filters: dict):
-        return await self.repository.get_one(filters)
+        return await self.repository.get_one(filters, self.fields)
 
     async def filter(self, filters: dict):
-        return await self.repository.filter(filters)
+        return await self.repository.filter(filters, self.fields)
 
     async def get_all(self):
-        return await self.repository.get_all()
+        return await self.repository.get_all(self.fields)
 
     async def delete_by_id(self, document_id: str):
         return await self.repository.delete_by_id(document_id)

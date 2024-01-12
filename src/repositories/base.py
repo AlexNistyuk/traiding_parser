@@ -17,17 +17,19 @@ class BaseRepository(Manager, IRepository):
     async def insert_many(self, documents: Iterable[dict]):
         return await self.db[self.collection].insert_many(documents)
 
-    async def get_by_id(self, document_id: str):
-        return await self.db[self.collection].find_one({"_id": ObjectId(document_id)})
+    async def get_by_id(self, document_id: str, fields: dict):
+        return await self.db[self.collection].find_one(
+            {"_id": ObjectId(document_id)}, fields
+        )
 
-    async def get_one(self, filters: dict):
-        return await self.db[self.collection].find_one(filters)
+    async def get_one(self, filters: dict, fields: dict):
+        return await self.db[self.collection].find_one(filters, fields)
 
-    async def filter(self, filters: dict):
-        return await self.db[self.collection].find(filters).to_list(length=None)
+    async def filter(self, filters: dict, fields: dict):
+        return await self.db[self.collection].find(filters, fields).to_list(length=None)
 
-    async def get_all(self):
-        return await self.db[self.collection].find({}).to_list(length=None)
+    async def get_all(self, fields: dict):
+        return await self.db[self.collection].find({}, fields).to_list(length=None)
 
     async def delete_by_id(self, document_id: str):
         return await self.db[self.collection].delete_one({"_id": ObjectId(document_id)})
