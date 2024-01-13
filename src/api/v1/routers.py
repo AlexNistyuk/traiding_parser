@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from api.routers.analytics import router as analytics_router
 from api.routers.assets import router as asset_router
 
 router = APIRouter(
@@ -8,3 +9,4 @@ router = APIRouter(
 )
 
 router.include_router(asset_router)
+router.include_router(analytics_router)

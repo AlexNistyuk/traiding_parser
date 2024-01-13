@@ -20,7 +20,7 @@ class Manager:
         return cls
 
     @classmethod
-    async def close(cls):
+    async def close(cls) -> None:
         cls.client.close()
 
         logger.info("Close database connection")
