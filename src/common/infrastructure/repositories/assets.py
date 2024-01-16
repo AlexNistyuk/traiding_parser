@@ -1,5 +1,5 @@
 from common.infrastructure.repositories.base import BaseRepository
-from config import get_settings
+from infrastructure.config import get_settings
 
 
 class AssetRepository(BaseRepository):

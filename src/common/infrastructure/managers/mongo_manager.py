@@ -2,8 +2,8 @@ import logging
 
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
-from common.domain.manager import IManager
-from config import get_settings
+from common.infrastructure.managers.interface import IManager
+from infrastructure.config import get_settings
 
 settings = get_settings()
 

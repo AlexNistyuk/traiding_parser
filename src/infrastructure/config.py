@@ -5,7 +5,7 @@ from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent
-ENV_FILE_PATH = os.path.join(BASE_DIR.parent, ".env")
+ENV_FILE_PATH = os.path.join(BASE_DIR.parent.parent, ".env")
 
 
 class Settings(BaseSettings):

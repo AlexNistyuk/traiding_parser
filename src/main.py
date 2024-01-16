@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from binances.infrastructure.manager import BinanceManager
+from infrastructure.managers.binances import BinanceManager
 from common.infrastructure.managers.mongo_manager import Manager as DatabaseManager
 from presentation.api.v1.routers import router as v1_router
 

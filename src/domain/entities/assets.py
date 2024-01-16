@@ -5,7 +5,7 @@ from bson import Decimal128
 from pydantic import BaseModel, Field, field_validator
 
 from common.domain.mongo_object_id import MongoObjectId
-from config import get_settings
+from infrastructure.config import get_settings
 
 settings = get_settings()
 

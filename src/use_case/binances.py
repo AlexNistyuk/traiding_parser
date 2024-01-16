@@ -1,7 +1,7 @@
 from bson import Decimal128
 
-from binances.domain.use_case import IBinanceUseCase
-from binances.infrastructure.manager import BinanceManager
+from binances.use_case.interface import IBinanceUseCase
+from infrastructure.managers.binances import BinanceManager
 
 
 class BinanceUseCase(BinanceManager, IBinanceUseCase):
