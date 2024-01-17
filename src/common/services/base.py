@@ -1,9 +1,14 @@
 from typing import Iterable
 
-from pymongo.results import UpdateResult, InsertOneResult, InsertManyResult, DeleteResult
+from pymongo.results import (
+    DeleteResult,
+    InsertManyResult,
+    InsertOneResult,
+    UpdateResult,
+)
 
-from common.infrastructure.repositories.interface import IRepository
-from common.use_case.interface import IUseCase
+from common.repositories.interface import IRepository
+from common.services.interface import IUseCase
 
 
 class BaseUseCase(IUseCase):

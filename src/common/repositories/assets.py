@@ -1,4 +1,4 @@
-from common.infrastructure.repositories.base import BaseRepository
+from common.repositories.base import BaseRepository
 from infrastructure.config import get_settings
 
 
