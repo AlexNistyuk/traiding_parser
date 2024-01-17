@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 from infrastructure.managers.binances import BinanceManager
 from infrastructure.managers.mongo_manager import Manager as DatabaseManager
-from presentation.api.v1.routers import router as v1_router
+from presentation.api.routers import router as v1_router
 
 
 @asynccontextmanager

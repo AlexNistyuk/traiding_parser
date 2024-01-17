@@ -7,7 +7,7 @@ from pymongo.results import (
     UpdateResult,
 )
 
-from common.use_case.interface import IUseCase
+from application.use_case.interface import IUseCase
 from infrastructure.repositories.interface import IRepository
 
 

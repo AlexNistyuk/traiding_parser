@@ -1,7 +1,7 @@
 import asyncio
 
-from common.use_case.assets import AssetUseCase
-from common.use_case.binances import BinanceUseCase
+from application.use_case.assets import AssetUseCase
+from application.use_case.binances import BinanceUseCase
 
 
 class CeleryUseCase:

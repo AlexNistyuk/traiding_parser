@@ -1,4 +1,4 @@
-from common.use_case.base import BaseUseCase
+from application.use_case.base import BaseUseCase
 from infrastructure.repositories.assets import AssetRepository
 
 
