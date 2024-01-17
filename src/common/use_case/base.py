@@ -7,8 +7,8 @@ from pymongo.results import (
     UpdateResult,
 )
 
-from common.repositories.interface import IRepository
-from common.services.interface import IUseCase
+from common.use_case.interface import IUseCase
+from infrastructure.repositories.interface import IRepository
 
 
 class BaseUseCase(IUseCase):

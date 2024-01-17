@@ -1,6 +1,6 @@
+from binances.use_case.interface import IBinanceUseCase
 from bson import Decimal128
 
-from binances.use_case.interface import IBinanceUseCase
 from infrastructure.managers.binances import BinanceManager
 
 

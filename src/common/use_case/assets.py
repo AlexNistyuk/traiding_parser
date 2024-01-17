@@ -1,5 +1,5 @@
-from common.repositories.assets import AssetRepository
-from common.services.base import BaseUseCase
+from common.use_case.base import BaseUseCase
+from infrastructure.repositories.assets import AssetRepository
 
 
 class AssetUseCase(BaseUseCase):

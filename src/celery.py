@@ -1,9 +1,8 @@
 import asyncio
 
 from celery.app import Celery
-
+from common.use_case.celery import CeleryUseCase
 from infrastructure.config import get_settings
-from use_case.celery import CeleryUseCase
 
 settings = get_settings()
 

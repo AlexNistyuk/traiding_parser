@@ -4,8 +4,8 @@ from binance import AsyncClient
 from binance.exceptions import BinanceWebsocketUnableToConnect
 from binance.streams import BinanceSocketManager, ReconnectingWebsocket
 
-from common.managers.interface import IManager
 from infrastructure.config import get_settings
+from infrastructure.managers.interface import IManager
 
 logger = logging.Logger(__name__)
 

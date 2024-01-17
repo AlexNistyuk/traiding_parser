@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
+from common.use_case.assets import AssetUseCase
 from domain.entities.assets import AssetCreateDTO, AssetGetDTO
-from use_case.assets import AssetUseCase
 
 router = APIRouter(prefix="/assets", tags=["assets"])
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
+from common.use_case.analytics import AnalyticsUseCase
 from domain.entities.analytics import AnalyticsGetDTO, AnalyticsHistoryDTO
-from use_case.analytics import AnalyticsUseCase
 
 router = APIRouter(prefix="/analytics", tags=["analytics"])
 
