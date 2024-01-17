@@ -4,8 +4,8 @@ from decimal import Decimal
 from bson import Decimal128
 from pydantic import BaseModel, Field, field_validator
 
-from config import get_settings
-from utils.mongo import MongoObjectId
+from domain.mongo_object_id import MongoObjectId
+from infrastructure.config import get_settings
 
 settings = get_settings()
 
@@ -21,7 +21,7 @@ DECIMAL_FIELDS = (
 )
 
 
-class AnalyticsGet(BaseModel):
+class AnalyticsGetDTO(BaseModel):
     id: MongoObjectId = Field(
         default_factory=MongoObjectId,
         alias="_id",
@@ -176,7 +176,7 @@ class AnalyticsGet(BaseModel):
         json_encoders = {MongoObjectId: str}
 
 
-class AnalyticsHistory(BaseModel):
+class AnalyticsHistoryDTO(BaseModel):
     symbol: str = Field(
         alias="_id",
         title="symbol",
@@ -288,7 +288,7 @@ class AnalyticsHistory(BaseModel):
         examples=[[1789213123123123, 92838287172381273]],
     )
 
-    @field_validator(*DECIMAL_FIELDS, mode="plain")
+    @field_validator(*DECIMAL_FIELDS, mode="before")
     @staticmethod
     def convert_to_decimal(field_values: list[Decimal128]) -> list[Decimal]:
         return [value.to_decimal() for value in field_values]

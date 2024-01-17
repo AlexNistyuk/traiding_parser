@@ -4,8 +4,8 @@ from decimal import Decimal
 from bson import Decimal128
 from pydantic import BaseModel, Field, field_validator
 
-from config import get_settings
-from utils.mongo import MongoObjectId
+from domain.mongo_object_id import MongoObjectId
+from infrastructure.config import get_settings
 
 settings = get_settings()
 
@@ -22,7 +22,7 @@ DECIMAL_FIELDS = (
 )
 
 
-class AssetCreate(BaseModel):
+class AssetCreateDTO(BaseModel):
     symbol: str = Field(
         alias="symbol",
         title="symbol",
@@ -163,7 +163,7 @@ class AssetCreate(BaseModel):
         return Decimal128(str(field_value))
 
 
-class AssetGet(BaseModel):
+class AssetGetDTO(BaseModel):
     id: MongoObjectId = Field(
         default_factory=MongoObjectId,
         alias="_id",

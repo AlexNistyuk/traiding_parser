@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from api.routers.analytics import router as analytics_router
-from api.routers.assets import router as asset_router
+from presentation.api.v1.analytics import router as analytics_router
+from presentation.api.v1.assets import router as asset_router
 
 router = APIRouter(
     prefix="/v1",

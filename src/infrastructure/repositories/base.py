@@ -8,8 +8,8 @@ from pymongo.results import (
     UpdateResult,
 )
 
-from db.mongo_manager import Manager
-from interfaces.database import IRepository
+from infrastructure.managers.mongo_manager import Manager
+from infrastructure.repositories.interface import IRepository
 
 
 class BaseRepository(Manager, IRepository):

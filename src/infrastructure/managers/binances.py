@@ -4,10 +4,13 @@ from binance import AsyncClient
 from binance.exceptions import BinanceWebsocketUnableToConnect
 from binance.streams import BinanceSocketManager, ReconnectingWebsocket
 
+from infrastructure.config import get_settings
+from infrastructure.managers.interface import IManager
+
 logger = logging.Logger(__name__)
 
 
-class BinanceManager:
+class BinanceManager(IManager):
     client: AsyncClient
     web_socket: ReconnectingWebsocket
 
@@ -16,6 +19,7 @@ class BinanceManager:
         try:
             logger.info("Connect to Binance API using web socket")
 
+            AsyncClient.REQUEST_TIMEOUT = get_settings().binance_api_request_timeout
             cls.client = await AsyncClient.create()
             cls.web_socket = BinanceSocketManager(cls.client).ticker_socket()
 
@@ -23,7 +27,7 @@ class BinanceManager:
 
             return cls
         except BinanceWebsocketUnableToConnect as exc:
-            logger.error(f"Error while connecting to binance api: {exc}")
+            logger.error(f"Error while connecting to binances api: {exc}")
 
     @classmethod
     async def close(cls) -> None:

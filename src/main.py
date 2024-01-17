@@ -1,11 +1,11 @@
 from contextlib import asynccontextmanager
-from parser.manager import BinanceManager
 
 import uvicorn
 from fastapi import FastAPI
 
-from api.v1.routers import router as v1_router
-from db.mongo_manager import Manager as DatabaseManager
+from infrastructure.managers.binances import BinanceManager
+from infrastructure.managers.mongo_manager import Manager as DatabaseManager
+from presentation.api.routers import router as v1_router
 
 
 @asynccontextmanager

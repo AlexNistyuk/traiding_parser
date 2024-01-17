@@ -5,7 +5,7 @@ from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent
-ENV_FILE_PATH = os.path.join(BASE_DIR.parent, ".env")
+ENV_FILE_PATH = os.path.join(BASE_DIR.parent.parent, ".env")
 
 
 class Settings(BaseSettings):
@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     celery_beat_time: int
     decimal_places: int
     decimal_max_digits: int
+    binance_api_request_timeout: int
 
     model_config = SettingsConfigDict(env_file=ENV_FILE_PATH)
 

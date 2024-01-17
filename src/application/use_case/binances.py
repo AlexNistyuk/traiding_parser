@@ -1,12 +1,13 @@
-from parser.manager import BinanceManager
-
+from binances.use_case.interface import IBinanceUseCase
 from bson import Decimal128
 
+from infrastructure.managers.binances import BinanceManager
 
-class BinanceAPIService(BinanceManager):
-    """Binance service. Use for getting info about tickers"""
 
-    async def get_tickers_info(self) -> list:
+class BinanceUseCase(BinanceManager, IBinanceUseCase):
+    """Binance use case. Use for getting info about tickers"""
+
+    async def get_tickers_info(self) -> list[dict]:
         tickers = await self.web_socket.recv()
 
         return [self.__get_ticker_info(ticker) for ticker in tickers]

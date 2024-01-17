@@ -2,14 +2,15 @@ import logging
 
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
-from config import get_settings
+from infrastructure.config import get_settings
+from infrastructure.managers.interface import IManager
 
 settings = get_settings()
 
 logger = logging.Logger(__name__)
 
 
-class Manager:
+class Manager(IManager):
     """Database manager which connects to mongodb"""
 
     client: AsyncIOMotorClient = AsyncIOMotorClient(settings.mongodb_url)
