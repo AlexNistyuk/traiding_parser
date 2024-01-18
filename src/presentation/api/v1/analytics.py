@@ -11,7 +11,7 @@ async def get_assets() -> list[dict]:
     return await AnalyticsUseCase().get_all()
 
 
-@router.get("/history", response_model=AnalyticsHistoryDTO)
+@router.get("/history", response_model=list[AnalyticsHistoryDTO])
 async def get_assets_history() -> dict:
     return await AnalyticsUseCase().get_group_by_assets()
 

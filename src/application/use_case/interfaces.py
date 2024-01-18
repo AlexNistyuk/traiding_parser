@@ -49,3 +49,17 @@ class IUseCase(ABC):
     @abstractmethod
     async def insert_many(self, *args, **kwargs):
         raise NotImplementedError
+
+
+class IBrokerUseCase(ABC):
+    @abstractmethod
+    async def send(self, *args, **kwargs):
+        raise NotImplementedError
+
+    @abstractmethod
+    async def send_and_wait(self, *args, **kwargs):
+        raise NotImplementedError
+
+    @abstractmethod
+    async def send_batch(self, *args, **kwargs):
+        raise NotImplementedError

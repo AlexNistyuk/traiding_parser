@@ -1,19 +1,24 @@
-version: "3.3"
+version: "3.8"
 services:
   fastapi_app:
-    image: parser
     build: .
+    container_name: ${WEB_HOST}
     ports:
       - ${WEB_PORT}:${WEB_PORT}
     env_file:
       - .env
     entrypoint:
-      - ./fastapi-entrypoint.sh
+      - ./entrypoints/fastapi.sh
 
-  redis_fastapi_app:
-    image: bitnami/redis:latest
-    container_name: ${REDIS_HOST}
-    ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+  celery_beat_app:
+    build: .
+    container_name: celery_beat
+    entrypoint:
+      - ./entrypoints/celery_beat.sh
+    depends_on:
+      - fastapi_app
+
+networks:
+  default:
+    external: true
+    name: ${DEFAULT_NETWORK}

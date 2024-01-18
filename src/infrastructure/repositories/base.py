@@ -1,4 +1,5 @@
-from typing import Iterable
+import json
+from typing import Any, Iterable
 
 from bson import ObjectId
 from pymongo.results import (
@@ -8,8 +9,9 @@ from pymongo.results import (
     UpdateResult,
 )
 
+from infrastructure.managers.kafka import KafkaManager
 from infrastructure.managers.mongo_manager import Manager
-from infrastructure.repositories.interface import IRepository
+from infrastructure.repositories.interfaces import IBrokerRepository, IRepository
 
 
 class BaseRepository(Manager, IRepository):
@@ -56,3 +58,20 @@ class BaseRepository(Manager, IRepository):
 
     async def update_many(self, filters: dict, updates: dict) -> UpdateResult:
         return await self.db[self.collection].update_many(filters, updates)
+
+
+class BaseBrokerRepository(KafkaManager, IBrokerRepository):
+    """Base repository for brokers"""
+
+    topic: str
+
+    async def send(self, value: Any, *args, **kwargs):
+        return await self.client.send(
+            self.topic, json.dumps(value).encode("utf8"), *args, **kwargs
+        )
+
+    async def send_and_wait(self, value: Any, *args, **kwargs):
+        return await self.client.send_and_wait(self.topic, value, *args, **kwargs)
+
+    async def send_batch(self, batch: Any, partition: int):
+        return await self.client.send_batch(batch, self.topic, partition=partition)

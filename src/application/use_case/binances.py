@@ -1,10 +1,9 @@
-from binances.use_case.interface import IBinanceUseCase
 from bson import Decimal128
 
 from infrastructure.managers.binances import BinanceManager
 
 
-class BinanceUseCase(BinanceManager, IBinanceUseCase):
+class BinanceUseCase(BinanceManager):
     """Binance use case. Use for getting info about tickers"""
 
     async def get_tickers_info(self) -> list[dict]:

@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Any, Iterable
 
 from pymongo.results import (
     DeleteResult,
@@ -7,8 +7,8 @@ from pymongo.results import (
     UpdateResult,
 )
 
-from application.use_case.interfaces import IUseCase
-from infrastructure.repositories.interface import IRepository
+from application.use_case.interfaces import IBrokerUseCase, IUseCase
+from infrastructure.repositories.interfaces import IBrokerRepository, IRepository
 
 
 class BaseUseCase(IUseCase):
@@ -52,3 +52,18 @@ class BaseUseCase(IUseCase):
 
     async def delete_many(self, filters: dict) -> DeleteResult:
         return await self.repository.delete_many(filters)
+
+
+class BaseBrokerUseCase(IBrokerUseCase):
+    """Base use case for brokers"""
+
+    repository: IBrokerRepository
+
+    async def send(self, value: Any, *args, **kwargs):
+        return await self.repository.send(value, *args, **kwargs)
+
+    async def send_and_wait(self, value: Any, *args, **kwargs):
+        return await self.repository.send_and_wait(value, *args, **kwargs)
+
+    async def send_batch(self, batch: Any, partition: int):
+        return await self.repository.send_batch(batch, partition)

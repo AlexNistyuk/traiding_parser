@@ -1,8 +1,8 @@
 import asyncio
 
+import aiohttp
 from celery.app import Celery
 
-from application.use_case.celery import CeleryUseCase
 from infrastructure.config import get_settings
 
 settings = get_settings()
@@ -15,14 +15,22 @@ celery_app.autodiscover_tasks()
 
 celery_app.conf.beat_schedule = {
     "send_tickers_info": {
-        "task": "tasks.main.send_tickers_info",
+        "task": "application.tasks.send_tickers_info",
         "schedule": settings.celery_beat_time,
     }
 }
 
+WEB_URL = f"{settings.web_scheme}://{settings.web_host}:{settings.web_port}"
+COINS_ENDPOINT = f"{WEB_URL}{settings.coins_update_endpoint}"
+
 
 @celery_app.task
 def send_tickers_info():
-    service = CeleryUseCase()
+    asyncio.run(send_async_request())
 
-    asyncio.run(service.get_data_and_send())
+
+async def send_async_request():
+    async with aiohttp.ClientSession() as session:
+        response = await session.get(COINS_ENDPOINT)
+
+        return await response.text()

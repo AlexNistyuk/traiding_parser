@@ -49,3 +49,17 @@ class IRepository(ABC):
     @abstractmethod
     async def update_many(self, filters: dict, updates: dict):
         raise NotImplementedError
+
+
+class IBrokerRepository(ABC):
+    @abstractmethod
+    async def send(self, *args, **kwargs):
+        raise NotImplementedError
+
+    @abstractmethod
+    async def send_and_wait(self, *args, **kwargs):
+        raise NotImplementedError
+
+    @abstractmethod
+    async def send_batch(self, *args, **kwargs):
+        raise NotImplementedError
