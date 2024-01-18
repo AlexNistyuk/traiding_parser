@@ -17,6 +17,7 @@ celery_app.conf.beat_schedule = {
     "send_tickers_info": {
         "task": "application.tasks.send_tickers_info",
         "schedule": settings.celery_beat_time,
+        "options": {"queue": settings.celery_queue}
     }
 }
 

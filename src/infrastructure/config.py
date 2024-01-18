@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     redis_host: str
     redis_port: int
     celery_beat_time: int
+    celery_queue: str
     decimal_places: int
     decimal_max_digits: int
     binance_api_request_timeout: int

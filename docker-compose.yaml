@@ -10,11 +10,21 @@ services:
     entrypoint:
       - ./entrypoints/fastapi.sh
 
-  celery_beat_app:
+  celery_worker_fastapi_app:
     build: .
-    container_name: celery_beat
+    env_file:
+      - .env
+    container_name: celery_worker_fastapi
     entrypoint:
-      - ./entrypoints/celery_beat.sh
+      - ./entrypoints/celery-worker.sh
+    depends_on:
+      - fastapi_app
+
+  celery_beat_fastapi_app:
+    build: .
+    container_name: celery_beat_fastapi
+    entrypoint:
+      - ./entrypoints/celery-beat.sh
     depends_on:
       - fastapi_app
 
