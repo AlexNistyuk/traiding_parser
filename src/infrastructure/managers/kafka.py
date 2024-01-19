@@ -9,12 +9,9 @@ from infrastructure.managers.interfaces import IManager
 logger = logging.Logger(__name__)
 
 
-settings = get_settings()
-
-
 class KafkaManager(IManager):
     client: AIOKafkaProducer
-    url = f"{settings.kafka_host}:{settings.kafka_port}"
+    url = get_settings().kafka_url
 
     @classmethod
     async def connect(cls):

@@ -8,9 +8,9 @@ from infrastructure.config import get_settings
 settings = get_settings()
 
 
-redis_url = f"redis://{settings.redis_host}:{settings.redis_port}"
-
-celery_app = Celery("binance_parser", broker=redis_url, backend=redis_url)
+celery_app = Celery(
+    "binance_parser", broker=settings.redis_url, backend=settings.redis_url
+)
 celery_app.autodiscover_tasks()
 
 celery_app.conf.beat_schedule = {
@@ -21,9 +21,6 @@ celery_app.conf.beat_schedule = {
     }
 }
 
-WEB_URL = f"{settings.web_scheme}://{settings.web_host}:{settings.web_port}"
-COINS_ENDPOINT = f"{WEB_URL}{settings.coins_update_endpoint}"
-
 
 @celery_app.task
 def send_tickers_info():
@@ -32,6 +29,6 @@ def send_tickers_info():
 
 async def send_async_request():
     async with aiohttp.ClientSession() as session:
-        response = await session.get(COINS_ENDPOINT)
+        response = await session.get(settings.coins_update_url)
 
         return await response.text()
