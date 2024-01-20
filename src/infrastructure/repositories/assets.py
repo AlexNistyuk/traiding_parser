@@ -27,4 +27,4 @@ class AssetRepository(BaseRepository):
                 ]
             )
             .to_list(length=None)
-        )[0]
+        )

@@ -11,15 +11,25 @@ ENV_FILE_PATH = os.path.join(BASE_DIR.parent.parent, ".env")
 class Settings(BaseSettings):
     web_port: int
     web_host: str
+    web_url: str
+    web_container_host: str
     mongodb_url: str
     mongodb_database: str
     assets_collection: str
     redis_host: str
     redis_port: int
+    redis_url: str
     celery_beat_time: int
+    celery_queue: str
     decimal_places: int
     decimal_max_digits: int
     binance_api_request_timeout: int
+    kafka_host: str
+    kafka_port: int
+    kafka_url: str
+    kafka_binance_topic: str
+    default_network: str
+    coins_update_url: str
 
     model_config = SettingsConfigDict(env_file=ENV_FILE_PATH)
 

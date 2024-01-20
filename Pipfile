@@ -8,13 +8,18 @@ uvicorn = "*"
 python-binance = "*"
 motor = "*"
 aiokafka = "*"
-fastapi = {extras = ["all"], version = "*"}
+fastapi = {extras = ["all"] }
 python-dotenv = "*"
 websockets = "*"
 celery = "*"
 redis = "*"
 
 [dev-packages]
+pre-commit = "*"
+mongomock-motor = "*"
+pytest-asyncio = "*"
+pytest = "*"
+faker = "*"
 
 [requires]
 python_version = "3.11"

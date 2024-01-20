@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 from application.use_case.assets import AssetUseCase
 from domain.entities.assets import AssetCreateDTO, AssetGetDTO
@@ -6,18 +7,33 @@ from domain.entities.assets import AssetCreateDTO, AssetGetDTO
 router = APIRouter(prefix="/assets", tags=["assets"])
 
 
-@router.get("/", response_model=list[AssetGetDTO])
+@router.get("/", response_model=list[AssetGetDTO], status_code=HTTP_200_OK)
 async def get_assets() -> list[dict]:
-    return await AssetUseCase().get_all()
+    try:
+        return await AssetUseCase().get_all()
+    except Exception as exc:
+        raise HTTPException(
+            detail={"error": str(exc)}, status_code=HTTP_400_BAD_REQUEST
+        )
 
 
-@router.post("/", status_code=201, response_model=dict)
+@router.post("/", response_model=dict, status_code=HTTP_201_CREATED)
 async def create_asset(asset: AssetCreateDTO) -> dict:
-    result = await AssetUseCase().insert_one(asset.model_dump())
+    try:
+        result = await AssetUseCase().insert_one(asset.model_dump())
 
-    return {"_id": str(result.inserted_id)}
+        return {"_id": str(result.inserted_id)}
+    except Exception as exc:
+        raise HTTPException(
+            detail={"error": str(exc)}, status_code=HTTP_400_BAD_REQUEST
+        )
 
 
-@router.get("/{asset_id}", response_model=AssetGetDTO)
+@router.get("/{asset_id}", response_model=AssetGetDTO, status_code=HTTP_200_OK)
 async def get_asset(asset_id: str) -> dict:
-    return await AssetUseCase().get_by_id(asset_id)
+    try:
+        return await AssetUseCase().get_by_id(asset_id)
+    except Exception as exc:
+        raise HTTPException(
+            detail={"error": str(exc)}, status_code=HTTP_400_BAD_REQUEST
+        )

@@ -5,7 +5,7 @@ from binance.exceptions import BinanceWebsocketUnableToConnect
 from binance.streams import BinanceSocketManager, ReconnectingWebsocket
 
 from infrastructure.config import get_settings
-from infrastructure.managers.interface import IManager
+from infrastructure.managers.interfaces import IManager
 
 logger = logging.Logger(__name__)
 
@@ -27,11 +27,11 @@ class BinanceManager(IManager):
 
             return cls
         except BinanceWebsocketUnableToConnect as exc:
-            logger.error(f"Error while connecting to binances api: {exc}")
+            logger.error(f"Error while connecting to Binance API: {exc}")
 
     @classmethod
     async def close(cls) -> None:
         await cls.web_socket.__aexit__(None, None, None)
         await cls.client.close_connection()
 
-        logger.info("Close Binance API web socker connection")
+        logger.info("Close Binance API web socket connection")
