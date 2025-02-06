@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+uvicorn = "*"
+python-binance = "*"
+motor = "*"
+aiokafka = "*"
+fastapi = {extras = ["all"] }
+python-dotenv = "*"
+websockets = "*"
+celery = "*"
+redis = "*"
+
+[dev-packages]
+pre-commit = "*"
+mongomock-motor = "*"
+pytest-asyncio = "*"
+pytest = "*"
+faker = "*"
+
+[requires]
+python_version = "3.11"
